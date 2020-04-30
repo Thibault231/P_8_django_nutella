@@ -16,11 +16,16 @@ class FoodItem(models.Model):
     name = models.CharField(max_length=100, unique=True)
     brand = models.CharField(max_length=100)
     description = models.TextField()
+    allergens = models.TextField(default=None)
     nutriscore = models.CharField(max_length=1)
     store = models.CharField(max_length=50)
     picture = models.URLField()
     url_OpenFF = models.URLField()
+    
+
+class Category_Food(models.Model):
     fk_category_id= models.ForeignKey(Category, on_delete=models.CASCADE)
+    fk_food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
 
 
 class Search(models.Model):
