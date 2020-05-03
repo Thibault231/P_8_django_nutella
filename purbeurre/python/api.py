@@ -76,10 +76,14 @@ def Db_implementation():
         new_category = Category.objects.create(
             name = category
         )
+        print('Create Cat:',new_category.name, ' ,ok')
         food_items_list = api_extraction_by_category(category, CATEGORIES_LIST[1])
         
         for food_item in food_items_list:
             new_food_item = food_item_creation(food_item)
-            print('   Implement FI:',new_food_item.name, ' ,ok')
-    print('Implement Cat:',new_category.name, ' ,ok')
-
+            print('   Create FI:',new_food_item.name, ' ,ok') 
+            
+            for cat_to_link in food_item.category:
+                new_food_item.linked_cat.add(Category.objects.get(name=cat_to_link))
+            print('   Link to categories: ok')
+    print('Cat and food linked done:')
