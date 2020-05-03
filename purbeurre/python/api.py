@@ -1,13 +1,15 @@
 # coding: utf-8
 """ Rules the connection with the OpenfoodFact's API.
 """
-import requests
-from python.food_item import FoodItem
-from config import CATEGORIES_LIST
 import pprint
+import requests
+from .food_item import FoodItem
+from ..config import CATEGORIES_LIST
+from ..models import *
 
 
-def api_extraction_by_category(category):
+
+def api_extraction_by_category(category, super_cat_list):
     """
     Return a list of class food.Food objects implemented with cat_id and
     an API from OpenfoodFacts. Datas are taken from the page "categorie".
@@ -29,7 +31,7 @@ def api_extraction_by_category(category):
                 and len(element['ingredients_text_fr']) > 5:
             if element['product_name'] not in food_items_list:
                 if 'nutriscore_grade' in element:
-                    if 'stores' in element:
+                    if ('stores' in element) and ('image_front_url' in element):
                         food_item = FoodItem()
                         food_items_list.append(element['product_name'])
                         
@@ -43,38 +45,41 @@ def api_extraction_by_category(category):
                         food_item.allergens = (element['allergens_from_ingredients'])
                         food_item.store = (element['stores'])
                         food_item.picture = (element['image_front_url'])
+                        
+                        food_item.category = [category]
+                        for cat_item in super_cat_list:
+                            if cat_item in element['categories'].split(', '):
+                                food_item.category.append(cat_item)
 
                         food_list.append(food_item)
     return food_list
 
 def food_item_creation(food_item):
     new_food_item = FoodItem.objects.create(
-        name = food_item.name,
-        brand = food_item.brand,
-        description = food_item.description,
-        allergens = food_item.allergens,
+        name = food_item.name.encode('utf8'),
+        brand = food_item.brand.encode('utf8'),
+        description = food_item.description.encode('utf8'),
+        allergens = food_item.allergens.encode('utf8'),
         nutriscore = food_item.nutriscore,
-        store = food_item.store,
-        picture = food_item.picture,
-        url_OpenFF = food_item.url,
+        store = food_item.store.encode('utf8'),
+        picture = food_item.picture.encode('utf8'),
+        url_OpenFF = food_item.url_id.encode('utf8'),
         )
     return new_food_item
 
-def link_cat_food(new_food_item, new_category):
-    new_food = Category_Food.objects.create(
-        fk_category_id = new_category.id,
-        fk_food_id = new_food_item.id
-        )
 
 def Db_implementation():
-    for category in CATEGORIES_LIST:
+    for category in CATEGORIES_LIST[1]:
+        new_category = Category.objects.create(
+            name = category)
+    for category in CATEGORIES_LIST[0]:
         new_category = Category.objects.create(
             name = category
         )
-        food_items_list = api_extraction_by_category(category)
+        food_items_list = api_extraction_by_category(category, CATEGORIES_LIST[1])
         
         for food_item in food_items_list:
             new_food_item = food_item_creation(food_item)
-            link_cat_food(new_food_item, new_category)
             print('   Implement FI:',new_food_item.name, ' ,ok')
     print('Implement Cat:',new_category.name, ' ,ok')
+

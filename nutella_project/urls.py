@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from store import views
+from purbeurre import views
 
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^store/', include(('store.urls', 'store'), namespace='store')),
+    url(r'^purbeurre/', include(('purbeurre.urls', 'purbeurre'), namespace='purbeurre')),
     url(r'^admin/', admin.site.urls)
 ]
 

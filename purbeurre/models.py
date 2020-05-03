@@ -18,18 +18,15 @@ class FoodItem(models.Model):
     description = models.TextField()
     allergens = models.TextField(default=None)
     nutriscore = models.CharField(max_length=1)
-    store = models.CharField(max_length=50)
+    store = models.CharField(max_length=100)
     picture = models.URLField()
     url_OpenFF = models.URLField()
+    linked_cat = models.ManyToManyField(Category)
+
     
-
-class Category_Food(models.Model):
-    fk_category_id= models.ForeignKey(Category, on_delete=models.CASCADE)
-    fk_food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-
-
 class Search(models.Model):
     fk_food_id = models.ForeignKey(FoodItem, related_name='food', on_delete=models.CASCADE)
     fk_substitute_id = models.ForeignKey(FoodItem, related_name='substitute', on_delete=models.CASCADE)
     fk_account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     date_search = models.DateTimeField(auto_now_add=True)
+

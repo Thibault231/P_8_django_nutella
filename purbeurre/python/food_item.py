@@ -26,5 +26,6 @@ class FoodItem():
         self.picture = str()
 
 if __name__ == "__main__":
-    a = FoodItem()
-    print(a)
+    a='svfdgfbrggrbgrbb'
+    b= a.encode('windows-1252')
+    print(b)

@@ -51,7 +51,6 @@ ALLOWED_HOSTS = ['127.0.0.1',
 
 INSTALLED_APPS = [
     'purbeurre.apps.PurbeurreConfig',
-    'store.apps.StoreConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +104,7 @@ DATABASES = {
         'USER': 'postgres', # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'Wzk2mpbapo12@',
         'HOST': '',
-        'PORT': '5433',
+        'PORT': '5432',
         'ATOMIC_REQUESTS': True,
     }
 }
