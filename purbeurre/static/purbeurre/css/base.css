@@ -1,0 +1,22 @@
+body{
+    background-size:cover;
+    border: red dashed;
+}
+
+header{
+    background-image: url('../assets/backfont.png');
+    border: blue dashed;
+}
+
+section{
+    border: red dashed;
+}
+
+article{
+    border: green dashed;
+}
+
+footer{
+    background-image: url('../assets/backfont.png');
+    border: blue dashed;
+}

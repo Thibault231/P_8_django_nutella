@@ -1,22 +1,17 @@
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction, IntegrityError
 from .models import *
 from .python.api import *
 
 
-
-@transaction.non_atomic_requests
-def index(request):
-    Db_implementation()
-    a = api_extraction_by_category('pain', ['cereale', 'produit laitier'])
-    b = a[0].name
-    context = { 'message': b}
-    return render(request, 'purbeurre/index.html', context)
-
-
 ### Ask for first page: GET ###
 # display index template
+@transaction.non_atomic_requests
+def index(request):
+    #Db_implementation()
+    return render(request, 'purbeurre/index.html')
 
 ### Ask for a subsitute: GET ###
 # testing connection with DB
