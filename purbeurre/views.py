@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction, IntegrityError
 from .models import *
 from .python.api import *
+from .forms import SubstituteForm
 
 
 ### Ask for first page: GET ###
@@ -11,12 +12,29 @@ from .python.api import *
 @transaction.non_atomic_requests
 def index(request):
     #Db_implementation()
+    if request.method == 'POST':
+        item_name = request.POST.get('item_name').encode('utf8')
+        food_item = FoodItem.objects.get(name=item_name)
+        context = {
+        'name': food_item.name,
+        'nutriscore': food_item.nutriscore
+        }
+        return render(request, 'purbeurre/result.html', context)
     return render(request, 'purbeurre/index.html')
+
+@transaction.non_atomic_requests
+def result(request):
+    context = {
+        'name': 'ok',
+        'nutriscore': 'ok'
+    }
+    return render(request, 'purbeurre/result.html', context)
 
 ### Ask for a subsitute: GET ###
 # testing connection with DB
 # if connection ok:
     # get dats
+
     # if food name correct
         # find a substitute
         # if substitute exists
@@ -33,6 +51,8 @@ def index(request):
 # testing connection with DB
 # if connection ok
     # if food name correct
+
+    
             #send datas and template
     # else:
         # error 404

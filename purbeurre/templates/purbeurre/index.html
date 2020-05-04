@@ -5,18 +5,11 @@
   {% endblock %}
   
   {% block S1A1 %}
+  
   <article class="flex-column col-lg-6 col-sm-12">
       <h2>Trouvez un produit de substitution pour ceux que vous consommez tous les jours</h2>
-      <div>
-          <div class="container-fluid col-lg-8">
-            <form class="navbar-form navbar-right inline-form">
-              <div class="form-group">
-                <input type="search" class="input-sm form-control" placeholder="Recherche">
-                <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open">
-                </span> Chercher un aliment</button>
-              </div>
-            </form>
-          </div>
+      <div class="container-fluid col-lg-8">
+        {% include 'purbeurre/formular.html' %}
       </div>
   </article>
   {% endblock %}

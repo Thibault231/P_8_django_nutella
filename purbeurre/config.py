@@ -16,3 +16,9 @@ CATEGORIES_LIST = [
         'Sauces', 'Pizzas', 'Snacks sucrés'
         ]
     ]
+
+TESTS = {
+    "name1" : "fromage",
+    "name2" : "laittt",
+    "RightStatus" : 200
+}
