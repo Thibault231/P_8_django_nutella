@@ -1,6 +1,19 @@
 {% extends 'purbeurre/base.html' %}
 
 {% block S1A1 %}
-  {{name}}
-  {{nutriscore}}
+<article class="container col-lg-12">
+  <h2>Vous pouvez remplacer cet aliment par:</h2>
+  <div class="row">
+      {% for substitute in substitute_list %}
+          <div class="col-md-4 col-sm-12">
+            {{ substitute.name }}
+            {{substitute.nutriscore}}
+            {{substitute.picture}}
+            {% if connected %}
+            <button type="submit" class="btn btn-primary btn-sm">Sauvegarder</button>
+            {% endif %}
+          </div>
+      {% endfor %}
+  </div>
+</div>
 {% endblock %}

@@ -13,11 +13,14 @@ from .forms import SubstituteForm
 def index(request):
     #Db_implementation()
     if request.method == 'POST':
-        item_name = request.POST.get('item_name').encode('utf8')
-        food_item = FoodItem.objects.get(name=item_name)
+        item_name = request.POST.get('item_name')
+        food_item = FoodItem.objects.get(pk=775)
+        category_item = food_item.linked_cat.all()
+        substitute_list = category_item[0].fooditem_set.all()
+
         context = {
-        'name': food_item.name,
-        'nutriscore': food_item.nutriscore
+        'substitute_list': substitute_list,
+        'connected': True
         }
         return render(request, 'purbeurre/result.html', context)
     return render(request, 'purbeurre/index.html')

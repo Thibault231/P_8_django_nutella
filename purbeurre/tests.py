@@ -3,11 +3,6 @@ from django.urls import reverse
 from .models import Account, FoodItem, Category, Search
 from .config import TESTS
 
-class IndexPageTestCase(TestCase):
-    def test_index_page(self):
-        response = self.client.get(reverse('index'))
-        self.assertEqual(response.status_code, TESTS['RightStatus'])
-
 class DataBaseTestCase(TestCase):
 
     def setUp(self):
@@ -43,3 +38,15 @@ class DataBaseTestCase(TestCase):
         category = self.category
         select = FoodItem.objects.get(linked_cat__name__startswith=TESTS['name2'])
         self.assertEqual(select, food)
+
+
+class IndexPageTestCase(TestCase):
+    def test_index_page(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, TESTS['RightStatus'])
+
+
+class ResultPageTestCase(TestCase):
+    def test_result_page(self):
+        response = self.client.get(reverse('purbeurre:result'), item_name=TESTS['name1'])
+        self.assertEqual(response.status_code, TESTS['RightStatus'])
