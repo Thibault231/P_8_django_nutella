@@ -12,26 +12,42 @@ from .forms import SubstituteForm
 @transaction.non_atomic_requests
 def index(request):
     #Db_implementation()
-    if request.method == 'POST':
-        item_name = request.POST.get('item_name')
-        food_item = FoodItem.objects.get(pk=775)
-        category_item = food_item.linked_cat.all()
-        substitute_list = category_item[0].fooditem_set.all()
-
-        context = {
-        'substitute_list': substitute_list,
-        'connected': True
-        }
-        return render(request, 'purbeurre/result.html', context)
     return render(request, 'purbeurre/index.html')
 
 @transaction.non_atomic_requests
 def result(request):
+    item_name = request.POST['item_name']
+    food_item = FoodItem.objects.get(pk=775)
+    category_item = food_item.linked_cat.all()
+    substitute_list = category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore')
+
     context = {
-        'name': 'ok',
-        'nutriscore': 'ok'
+    'substitute_list': substitute_list,
+    'item_name':item_name,
+    'connected': True
     }
     return render(request, 'purbeurre/result.html', context)
+
+
+def item(request, item_id):
+    food_item = FoodItem.objects.get(id=item_id)
+    context = {
+        'food_item': food_item
+    }
+    return render(request, 'purbeurre/item.html', context)
+
+
+@transaction.non_atomic_requests
+def history(request):
+    food_item = FoodItem.objects.get(pk=775)
+    category_item = food_item.linked_cat.all()
+    substitute_list = category_item[0].fooditem_set.all()
+
+    context = {
+    'substitute_list': substitute_list,
+    'connected': True
+    }
+    return render(request, 'purbeurre/history.html', context)
 
 ### Ask for a subsitute: GET ###
 # testing connection with DB

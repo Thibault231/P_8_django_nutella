@@ -18,7 +18,7 @@ CATEGORIES_LIST = [
     ]
 
 TESTS = {
-    "name1" : "fromage",
-    "name2" : "laittt",
+    "name1" : "impossible",
+    "name2" : "hellfest",
     "RightStatus" : 200
 }

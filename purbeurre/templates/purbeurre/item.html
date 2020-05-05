@@ -1,0 +1,12 @@
+{% extends 'purbeurre/base.html' %}
+
+{% block S1A1 %}
+    {{food_item.name}}<br/>
+    {{food_item.nutriscore}}<br/>
+    {{food_item.picture}}<br/>
+    {{food_item.description}}<br/>
+    {{food_item.brand}}<br/>
+    {{food_item.store}}<br/>
+    {{food_item.allergens}}<br/>
+    <p> https://fr.openfoodfacts.org/produit/{{food_item.url_OpenFF}}</p><br/>
+{% endblock %}

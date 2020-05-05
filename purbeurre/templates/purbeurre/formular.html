@@ -1,5 +1,5 @@
 
-<form method="post">
+<form action="{% url 'purbeurre:result' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
       <label for="item_name">Aliment à substituer</label>
