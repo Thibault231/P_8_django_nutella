@@ -27,18 +27,22 @@
                 </form>
             </div>
             <ul class="nav navbar-nav col-lg-4">
-                <li class="active"><button>Mon compte</button> </li>
-                <li><button><a href="{% url 'purbeurre:history' %}"> Mes aliments</a></button></li>
-                <li> <button><a href="https://openclassrooms.com/fr/courses/1885491-prenez-en-main-bootstrap/1887934-les-plugins-jquery">
-                    Accueil/Déconnection</a></button></li>
+                <li ><button><a  href="{% url 'index' %}">Accueil</a></button> </li>
+                {% if user.is_authenticated %}
+                <li><button><a href="{% url 'purbeurre:history' %}"> Mes aliments sauvegardés</a></button></li>
+                {% endif %}
+                <li> <button><a href="{% url 'purbeurre:connexion' %}">Mon compte</a></button></li>
+                <li> <button><a href="{% url 'purbeurre:deconnexion' %}">Se deconnecter</a></button></li>
+                <li> <button><a href="{% url 'purbeurre:count_creation' %}">Creer un compte</a></button></li>
             </ul>       
         </nav>
         {% endblock %}
     </header>
 
     <section class="row text-center">
-        {% block h1 %}
-        {% endblock %}
+        <div class="col-lg-12 text-center">
+            <h1>{% block h1 %}{% endblock %}</h1>
+        </div>
         
         {% block S1A1 %}
         {% endblock %}

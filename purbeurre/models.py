@@ -1,15 +1,5 @@
 from django.db import models
-
-
-class Account(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, unique=True)
-    password = models.CharField(max_length=45)
-
-    def __str__(self):
-        return self.first_name
-
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -32,6 +22,13 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.name
 
+
+class Account(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    history = models.ManyToManyField(FoodItem)
+
+    def __str__(self):
+        return "Account of: {0}".format(self.user.username)
     
 class Search(models.Model):
     fk_food_id = models.ForeignKey(FoodItem, related_name='food', on_delete=models.CASCADE)

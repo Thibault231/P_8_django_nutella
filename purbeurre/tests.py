@@ -48,5 +48,5 @@ class IndexPageTestCase(TestCase):
 
 class ResultPageTestCase(TestCase):
     def test_result_page(self):
-        response = self.client.post(reverse('purbeurre:result', item_name=TESTS['name1']))
+        response = self.client.post(reverse('purbeurre:result'), {'item_name':TESTS['name1']})
         self.assertEqual(response.status_code, TESTS['RightStatus'])

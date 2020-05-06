@@ -1,0 +1,23 @@
+{% extends 'purbeurre/base.html' %}
+
+{% block h1 %}Créer mon compte{% endblock %}
+
+{% block S1A1 %}
+    <article class="container col-lg-12">
+        {% if error_password %}
+        <p><strong>Mot de passe erroné.</strong></p>
+        {% endif %}
+        {% if error_username %}
+        <p><strong>Nom d'utilisateur déjà attribué.</strong></p>
+        {% endif %}
+        {% if error_email %}
+        <p><strong>Un compte est déjà lié à cet email.</strong></p>
+        {% endif %}
+
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Créer mon compte" />
+        </form>
+    </article>
+{% endblock %}

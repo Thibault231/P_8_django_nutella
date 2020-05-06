@@ -148,4 +148,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = 'purbeurre:connexion'
+
 INTERNAL_IPS = ['127.0.0.1']

@@ -4,7 +4,12 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction, IntegrityError
 from .models import *
 from .python.api import *
-from .forms import SubstituteForm
+from .forms import *
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
+from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 ### Ask for first page: GET ###
@@ -37,7 +42,7 @@ def item(request, item_id):
     return render(request, 'purbeurre/item.html', context)
 
 
-@transaction.non_atomic_requests
+@login_required
 def history(request):
     food_item = FoodItem.objects.get(pk=775)
     category_item = food_item.linked_cat.all()
@@ -49,110 +54,58 @@ def history(request):
     }
     return render(request, 'purbeurre/history.html', context)
 
-### Ask for a subsitute: GET ###
-# testing connection with DB
-# if connection ok:
-    # get dats
+def count_creation(request):
+    error_password = False
+    error_username = False
+    error_email = False
+    if request.method == "POST":
+        form = CountCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
+            password1 = form.cleaned_data["password1"]
+            password2 = form.cleaned_data["password2"]
 
-    # if food name correct
-        # find a substitute
-        # if substitute exists
-            #send datas and template
-        # if substitute doesn't exists
-            # error not found
-    # else:
-        # error 404
-# if not:
-    #error 500
+            if password1==password2:
+                user_control = User.objects.filter(username=username)
+                if not user_control:
+                    useremail_control = User.objects.filter(email=email)
+                    if not  useremail_control:
+                        user = User.objects.create_user(
+                            username, email, password1)  
+                        user.first_name = first_name
+                        user.last_name = last_name              
+                        login(request, user)
+                        return render(request, 'purbeurre/index.html')
+                    else:
+                        error_email = True
+                else:
+                   error_username = True
+            else:
+                error_password = True
+    else:
+        form = CountCreationForm()
+    return render(request, 'purbeurre/count_creation.html', locals())
 
+def connexion(request):
+    error = False
+    if request.method == "POST":
+        form = ConnexionForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+            else:
+                error = True
+    else:
+        form = ConnexionForm()
+    return render(request, 'purbeurre/connexion.html', locals())
 
-### Ask for a food item: GET###
-# testing connection with DB
-# if connection ok
-    # if food name correct
+def deconnexion(request):
+    logout(request)
+    return render(request, 'purbeurre/index.html')
 
-    
-            #send datas and template
-    # else:
-        # error 404
-# if not:
-    #error 500
-
-
-### Ask for the history: POST ###
-# testing connection with DB
-# if connection ok:
-    # found client count
-    # if count exists
-        # if history empty
-            #empty template response
-        # else:
-            #send datas and template
-    # else:
-        # error 404
-# if not:
-    #error 500
-
-### Connecting to an account: GET ###
-# testing connection with DB
-# if connection ok:
-    #get datas
-    # if datas corrects
-        # get clients informations from DB
-        # send response and template
-    # else
-        # error 404
-# if not:
-    #error 500
-
-
-### Creating an account: GET ###
-# testing connection with DB
-# if connection ok:
-    #get datas
-    # if datas corrects
-        # check unexisting client
-        # if count doesn't exist
-            #create account
-            # send response and template
-        # else:
-            # error response
-    # else
-        # error 404
-# if not:
-    #error 500
-
-
-### See my account: POST ###
-# testing connection with DB
-# if connection ok:
-    # get connection's datas
-    # if datas corrects
-        # found client count
-        # if count exists
-            # get client datas in db
-            # send response and template
-        # else:
-            # create account page
-    # else:
-        # connection page
-# if not:
-    #error 500
-
-
-### save my search: POST ###
-# testing connection with DB
-# if connection ok:
-    # get connection's datas
-    # if datas corrects
-        # found client count
-        # if count exists
-            # get datas
-            # save datas in db
-            # send response and template
-        # else:
-            # error 404
-    # else:
-        # connection page
-# if not:
-    #error 500
