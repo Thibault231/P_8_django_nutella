@@ -20,6 +20,14 @@ article{
     border: green dashed;
 }
 
+#substituteBox{
+    margin-bottom: 15px;
+}
+
+.foodPicture{
+    float: left;
+}
+
 footer{
     background-image: url('../assets/backfont.png');
     border: blue dashed;

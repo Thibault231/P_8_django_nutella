@@ -22,7 +22,7 @@ def index(request):
 @transaction.non_atomic_requests
 def result(request):
     item_name = request.POST['item_name']
-    food_item = FoodItem.objects.get(pk=775)
+    food_item = FoodItem.objects.get(name=item_name)
     category_item = food_item.linked_cat.all()
     substitute_list = category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore')
 
@@ -44,7 +44,7 @@ def item(request, item_id):
 
 @login_required
 def history(request):
-    food_item = FoodItem.objects.get(pk=775)
+    food_item = FoodItem.objects.get(pk=25)
     category_item = food_item.linked_cat.all()
     substitute_list = category_item[0].fooditem_set.all()
 

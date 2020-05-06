@@ -29,13 +29,5 @@ class Account(models.Model):
 
     def __str__(self):
         return "Account of: {0}".format(self.user.username)
-    
-class Search(models.Model):
-    fk_food_id = models.ForeignKey(FoodItem, related_name='food', on_delete=models.CASCADE)
-    fk_substitute_id = models.ForeignKey(FoodItem, related_name='substitute', on_delete=models.CASCADE)
-    fk_account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    date_search = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.date_search
+
 

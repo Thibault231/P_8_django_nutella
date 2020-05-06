@@ -56,14 +56,14 @@ def api_extraction_by_category(category, super_cat_list):
 
 def food_item_creation(food_item):
     new_food_item = FoodItem.objects.create(
-        name = food_item.name.encode('utf8'),
-        brand = food_item.brand.encode('utf8'),
-        description = food_item.description.encode('utf8'),
-        allergens = food_item.allergens.encode('utf8'),
+        name = food_item.name,
+        brand = food_item.brand.encode('utf-8'),
+        description = food_item,
+        allergens = food_item.allergens,
         nutriscore = food_item.nutriscore,
-        store = food_item.store.encode('utf8'),
-        picture = food_item.picture.encode('utf8'),
-        url_OpenFF = food_item.url_id.encode('utf8'),
+        store = food_item.store.encode('utf-8'),
+        picture = food_item.picture,
+        url_OpenFF = food_item.url_id,
         )
     return new_food_item
 

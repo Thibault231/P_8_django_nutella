@@ -5,11 +5,13 @@
   <h2>Vous pouvez remplacer l'aliment {{item_name}} par:</h2>
   <div class="row">
       {% for substitute in substitute_list %}
-          <div class="col-md-4 col-sm-12">
-            {{ substitute.name }}
-            {{substitute.nutriscore}}
-            {{substitute.picture}}
-            {% if connected %}
+          <div class="d-flex flex-column col-md-4 col-sm-12" id="substituteBox">
+            <p> <img src={{substitute.picture}} alt="Photo de "{{ substitute.name }} class="foodPicture" />
+              {{substitute.nutriscore}}
+            </p>
+            <p><a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a></p>
+            
+            {% if user.is_authenticated %}
             <button type="submit" class="btn btn-primary btn-sm">Sauvegarder</button>
             {% endif %}
           </div>
