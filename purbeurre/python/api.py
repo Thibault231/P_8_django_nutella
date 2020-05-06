@@ -30,38 +30,39 @@ def api_extraction_by_category(category, super_cat_list):
         if ('ingredients_text_fr' in element)\
                 and len(element['ingredients_text_fr']) > 5:
             if element['product_name'] not in food_items_list:
-                if 'nutriscore_grade' in element:
+                if ('nutriscore_grade' in element) and ('ingredients_text_debug' in element):
                     if ('stores' in element) and ('image_front_url' in element):
-                        food_item = FoodItem()
-                        food_items_list.append(element['product_name'])
-                        
-                        food_item.url_id = (element['_id'])
-                        food_item.brand = (element['brands'])
-                        food_item.name = (element['product_name'])
-                        food_item.nutriscore = (
-                            element['nutriscore_grade'].upper())
-                        food_item.description = (
-                            element['ingredients_text_fr'])
-                        food_item.allergens = (element['allergens_from_ingredients'])
-                        food_item.store = (element['stores'])
-                        food_item.picture = (element['image_front_url'])
-                        
-                        food_item.category = [category]
-                        for cat_item in super_cat_list:
-                            if cat_item in element['categories'].split(', '):
-                                food_item.category.append(cat_item)
+                        if (element['ingredients_text_debug']) is not None:
+                            food_item = FoodItem()
+                            food_items_list.append(element['product_name'])
+                            
+                            food_item.url_id = (element['_id'])
+                            food_item.brand = (element['brands'])
+                            food_item.name = (element['product_name'])
+                            food_item.nutriscore = (
+                                element['nutriscore_grade'].upper())
+                            food_item.description = (
+                                element['ingredients_text_debug'])
+                            food_item.allergens = (element['allergens_from_ingredients'])
+                            food_item.store = (element['stores'])
+                            food_item.picture = (element['image_front_url'])
+                            
+                            food_item.category = [category]
+                            for cat_item in super_cat_list:
+                                if cat_item in element['categories'].split(', '):
+                                    food_item.category.append(cat_item)
 
-                        food_list.append(food_item)
+                            food_list.append(food_item)
     return food_list
 
 def food_item_creation(food_item):
     new_food_item = FoodItem.objects.create(
         name = food_item.name,
-        brand = food_item.brand.encode('utf-8'),
-        description = food_item,
+        brand = food_item.brand,
+        description = food_item.description,
         allergens = food_item.allergens,
         nutriscore = food_item.nutriscore,
-        store = food_item.store.encode('utf-8'),
+        store = food_item.store,
         picture = food_item.picture,
         url_OpenFF = food_item.url_id,
         )
@@ -87,3 +88,4 @@ def Db_implementation():
                 new_food_item.linked_cat.add(Category.objects.get(name=cat_to_link))
             print('   Link to categories: ok')
     print('Cat and food linked done:')
+
