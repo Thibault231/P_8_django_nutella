@@ -41,16 +41,28 @@ def item(request, item_id):
     }
     return render(request, 'purbeurre/item.html', context)
 
+@login_required
+def save(request, item_id):
+    food_item = FoodItem.objects.get(id=item_id)
+    account = Account.objects.get(user=request.user)
+    old_history = account.history.all()
+    if food_item not in old_history:
+        account.history.add(food_item)
+        message = "Le produit a bien été ajouté à vos favoris" 
+    else:
+        message = "Le produit est déjà dans vos favoris" 
+    context = {
+        'hello' : message
+    }
+    return render(request, 'purbeurre/test.html', context)
 
 @login_required
 def history(request):
-    food_item = FoodItem.objects.get(pk=25)
-    category_item = food_item.linked_cat.all()
-    substitute_list = category_item[0].fooditem_set.all()
+    account = Account.objects.get(user=request.user)
+    substitute_list = account.history.all()
 
     context = {
     'substitute_list': substitute_list,
-    'connected': True
     }
     return render(request, 'purbeurre/history.html', context)
 
@@ -76,7 +88,8 @@ def count_creation(request):
                         user = User.objects.create_user(
                             username, email, password1)  
                         user.first_name = first_name
-                        user.last_name = last_name              
+                        user.last_name = last_name
+                        account = Account.objects.create (user=user)              
                         login(request, user)
                         return render(request, 'purbeurre/index.html')
                     else:
