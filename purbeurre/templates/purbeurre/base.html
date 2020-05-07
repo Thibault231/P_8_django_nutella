@@ -30,9 +30,12 @@
                 <li ><button><a  href="{% url 'index' %}">Accueil</a></button> </li>
                 {% if user.is_authenticated %}
                 <li><button><a href="{% url 'purbeurre:history' %}"> Mes aliments sauvegardés</a></button></li>
-                {% endif %}
-                <li> <button><a href="{% url 'purbeurre:connexion' %}">Mon compte</a></button></li>
+                <li> <button><a href="{% url 'purbeurre:myaccount' %}">Mon compte</a></button></li>
                 <li> <button><a href="{% url 'purbeurre:deconnexion' %}">Se deconnecter</a></button></li>
+                {% endif %}
+                {% if user.is_anonymous %}
+                <li> <button><a href="{% url 'purbeurre:connexion' %}">Me connecter</a></button></li>
+                {% endif %}
                 <li> <button><a href="{% url 'purbeurre:count_creation' %}">Creer un compte</a></button></li>
             </ul>       
         </nav>
@@ -51,7 +54,6 @@
         {% endblock %}
 
         {% block S1A3 %}
-
         {% endblock %}
     
     </section>

@@ -1,0 +1,32 @@
+{% extends 'purbeurre/base.html' %}
+
+{% block h1 %}
+    Mon compte
+{% endblock %}
+
+{% block S1A1 %}
+    <article class="container d-flex flex-column col-sm-12 col-lg-6">
+        <h2>Mes informations</h2>
+        <p>Pseudo:  {{user.username}}</p>
+        <p>Prénom:  {{user.first_name}}</p>
+        <p>Nom:     {{user.last_name}}</p>
+        <p>Email:   {{user.email}}</p>
+    </article>
+{% endblock %}
+
+{% block S1A2 %}
+    <article class="container col-sm-12 col-lg-6">
+        <h2>Ma dernière recherche</h2>
+        <div class="d-flex flex-column col-lg-12" >
+            <div class="row col-lg-12">
+            <p class=" text-center col-lg-12"> <img src={{latest_substitute.picture}} alt="Photo de "{{ latest_substitute.name }} />
+              Nutriscore: {{latest_substitute.nutriscore}}
+            </p>
+            </div>
+            <p class="text-center"><a href="/purbeurre/item/{{latest_substitute.id }}">{{latest_substitute.name }}</a></p>
+        </div>
+        <button>
+            <a href="{% url 'purbeurre:history' %}"> Accéder à mon historique de recherche</a>
+        </button>
+    </article>
+{% endblock %}

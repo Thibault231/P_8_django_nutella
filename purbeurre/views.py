@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 # display index template
 @transaction.non_atomic_requests
 def index(request):
-    Db_implementation()
+    #Db_implementation()
     return render(request, 'purbeurre/index.html')
 
 @transaction.non_atomic_requests
@@ -66,6 +66,18 @@ def history(request):
     }
     return render(request, 'purbeurre/history.html', context)
 
+@login_required
+def myaccount(request):
+    user = request.user
+    account = Account.objects.get(user=user)
+    substitute_list = list(account.history.all())
+    latest_substitute = substitute_list[-1]
+    context = {
+    'user': user,
+    'latest_substitute': latest_substitute
+    }
+    return render(request, 'purbeurre/myaccount.html', context)
+
 def count_creation(request):
     error_password = False
     error_username = False
@@ -89,9 +101,10 @@ def count_creation(request):
                             username, email, password1)  
                         user.first_name = first_name
                         user.last_name = last_name
+                        user.save()
                         account = Account.objects.create (user=user)              
                         login(request, user)
-                        return render(request, 'purbeurre/index.html')
+                        return render(request, 'purbeurre/myaccount.html')
                     else:
                         error_email = True
                 else:
@@ -107,9 +120,9 @@ def connexion(request):
     if request.method == "POST":
         form = ConnexionForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data["username"]
+            email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             if user:
                 login(request, user)
             else:
