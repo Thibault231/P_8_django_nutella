@@ -1,20 +1,4 @@
-{% extends 'purbeurre/base.html' %}
-
-{% block nav %}
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Colette et Remy</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-{% endblock %}     
+{% extends 'purbeurre/base.html' %}  
 
 {% block S1A1 %}
 <!-- About-->
@@ -27,6 +11,7 @@
             </div>
             <h2>Trouvez un produit de substitution, pour ceux que vous consommez tous les jours.</h2>
             <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                     <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
                     <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
@@ -85,34 +70,7 @@
 </section>
 
 <!-- Call to action-->
-<section class="page-section bg-dark text-white">
+<section class="page-section bg-roichoco text-white">
 </section>
 {% endblock %}
 
-{% block S1A3 %}
-<!-- Contact-->
-<section class="page-section" id="contact">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="mt-0">Contactez nous:</h2>
-                <hr class="divider my-4" />
-                <p class="text-muted mb-5">
-                    Envoyez nous un email ou contactez nous par téléphone.
-                    Nous vous répondrons aussi vite que possible.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-                <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-                <div>+1 (555) 123-4567</div>
-            </div>
-            <div class="col-lg-4 mr-auto text-center">
-                <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-                <a class="d-block" href="mailto:contact@purbeurre.com">contact@purbeurre.com</a>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}

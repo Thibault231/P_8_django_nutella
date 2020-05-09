@@ -9,7 +9,7 @@
 
     {% load static %}
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{% static 'purbeurre/assets/img/favicon.ico' %}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -27,51 +27,54 @@
     
 <body id="page-top">
     {% block nav %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="row col-lg-12 bg-camou">
+        <div class="row col-lg-4  col-sm-12">
+            <img src="{% static 'purbeurre/assets/img/favicon2.png' %}" class="floating-left" alt="logo" />
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'purbeurre:deconnexion' %}">PurBeurre</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        </div>
+        <div class="row container-fluid col-sm-12 col-md-6 col-lg-4">
+            <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
+                {% csrf_token %}
+                <div class="row form-group">
+                  <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
+                  <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
+                </div>
+            </form>
+        </div>
+        <div class="container row col-lg-4">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'index' %}">
+                        <i class="fas fa-cookie-bite" title="Accueil"></i></a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:count_creation' %}">
+                        <i class="far fa-user-circle" title="Creer un compte"></i></a></li>
+                    {% if user.is_anonymous %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:connexion' %}">
+                        <i class="fas fa-user text-center" title="Me connecter"></i></a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:myaccount' %}">
+                        <i class="fas fa-user" title="Mon compte"></i> </a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:deconnexion' %}">
+                        <i class="fas fa-sign-out-alt" title="Se deconnecter"></i></a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:history' %}"> 
+                        <img class="img-fluid" src="{% static 'purbeurre/assets/img/carrot.png' %}" alt="carrot" title="Mes aliments sauvegardés"/></a></li>
+                    {% endif %}
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
     {% endblock %}
+
     <header>
         {% block header %}
-        <nav class="navbar navbar-expand-md navbar-inverse">
-            <div class="col-lg-1">Logo</div>
-            <div class="col-lg-5">Purbeurre</div>
-            <div class="container-fluid col-lg-2">
-                <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
-                      <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
-                    </div>
-                </form>
-            </div>
-            <ul class="nav navbar-nav col-lg-4">
-                <li ><button><a  href="{% url 'index' %}">Accueil</a></button> </li>
-                {% if user.is_authenticated %}
-                <li class="row">
-                    <img class="img-fluid" src="assets/img/carrot.png" alt="carrot" />
-                    <button><a href="{% url 'purbeurre:history' %}"> Mes aliments sauvegardés</a></button></li>
-                <li  class="row">
-                    <i class="fas fa-user"></i>
-                    <button><a href="{% url 'purbeurre:myaccount' %}">Mon compte</a></button>
-                </li>
-                <li  class="row">
-                    <i class="far fa-sign-out-alt"></i>
-                    <button><a href="{% url 'purbeurre:deconnexion' %}">Se deconnecter</a></button>
-                </li>
-                {% endif %}
-                {% if user.is_anonymous %}
-                <li  class="row">
-                    <i class="fas fa-user"></i>
-                    <button><a href="{% url 'purbeurre:connexion' %}">Me connecter</a></button>
-                </li>
-                {% endif %}
-                <li> <button><a href="{% url 'purbeurre:count_creation' %}">Creer un compte</a></button></li>
-            </ul>       
-        </nav>
         {% endblock %}
     </header>
-
-    {% block h1 %}
-            <h1 class="col-lg-12 text-center"></h1>
-    {% endblock %}
+    
         
     {% block S1A1 %}
     {% endblock %}
@@ -79,13 +82,34 @@
     {% block S1A2 %}
     {% endblock %}
 
-    {% block S1A3 %}
-    {% endblock %}
-
-    
+    <!-- Contact-->
+    <section class="page-section" id="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mt-0">Contactez nous:</h2>
+                    <hr class="divider my-4" />
+                    <p class="text-muted mb-5">
+                        Envoyez nous un email ou contactez nous par téléphone.
+                        Nous vous répondrons aussi vite que possible.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+                    <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                    <div>+1 (555) 123-4567</div>
+                </div>
+                <div class="col-lg-4 mr-auto text-center">
+                    <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                    <a class="d-block" href="mailto:contact@purbeurre.com">contact@purbeurre.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     {% block footer %}
-    <footer class="bg-light py-5">
+    <footer class="py-5 bg-camou">
         <div class="row">
             <div class="col-lg-6 small text-center text-muted">
                 Mentions legales

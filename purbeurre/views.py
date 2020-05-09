@@ -24,11 +24,11 @@ def result(request):
     item_name = request.POST['item_name']
     food_item = FoodItem.objects.get(name=item_name)
     category_item = food_item.linked_cat.all()
-    substitute_list = category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore')
-
+    substitute_list = list(category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore'))
+    substitute_list.remove(food_item)
     context = {
     'substitute_list': substitute_list,
-    'item_name':item_name,
+    'item_name':food_item,
     'connected': True
     }
     return render(request, 'purbeurre/result.html', context)

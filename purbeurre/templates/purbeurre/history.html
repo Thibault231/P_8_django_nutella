@@ -1,17 +1,22 @@
 {% extends 'purbeurre/base.html' %}
 
+
 {% block S1A1 %}
-<article class="container col-lg-12">
-  <h2>Vous pouvez remplacer l'aliment {{item_name}} par:</h2>
-  <div class="row">
-      {% for substitute in substitute_list %}
-          <div class="d-flex flex-column col-md-4 col-sm-12" id="substituteBox">
-            <p> <img src={{substitute.picture}} alt="Photo de "{{ substitute.name }} class="foodPicture" />
-              {{substitute.nutriscore}}
-            </p>
-            <p><a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a></p>
-          </div>
-      {% endfor %}
+<section class="flex-column col-lg-12 text-center">
+  <h1 class="bg-moufri">Mes aliments sauvegardés<br/></h1>
+  <article class="container col-lg-12 bg-roichoco">
+    <h2>Cliquez sur l'aliment pour plus d'informations</h2>
+    <div class="row">
+        {% for substitute in substitute_list %}
+            <div class="d-flex flex-column col-md-4 col-sm-12" id="substituteBox">
+              <p> <img src={{substitute.picture}} alt="Photo de "{{ substitute.name }} class="foodPicture" />
+                {{substitute.nutriscore}}
+              </p>
+              <p><a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a></p>
+            </div>
+        {% endfor %}
+    </div>
   </div>
-</div>
+  </article>
+</section>
 {% endblock %}
