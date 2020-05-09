@@ -24,3 +24,8 @@ class FoodItem():
         self.nutriscore = str()
         self.url_id = str()
         self.picture = str()
+
+if __name__ == "__main__":
+    a='svfdgfbrggrbgrbb'
+    b= a.encode('windows-1252')
+    print(b)

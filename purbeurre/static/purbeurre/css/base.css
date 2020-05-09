@@ -1,34 +1,7 @@
-body{
-    background-size:cover;
-    border: rgb(255, 0, 170) dashed;
-}
-
-header{
-    background-image: url('../assets/backfont.png');
-    border: yellow dashed;
-}
-
-.item_name{
-    background-color: gray;
-}
-
-section{
-    border: red dashed;
-}
-
-article{
-    border: green dashed;
-}
-
 #substituteBox{
     margin-bottom: 15px;
 }
 
 .foodPicture{
     float: left;
-}
-
-footer{
-    background-image: url('../assets/backfont.png');
-    border: blue dashed;
 }
