@@ -29,22 +29,22 @@ def api_extraction_by_category(category, super_cat_list):
     for element in file['products']:
         if ('ingredients_text_fr' in element)\
                 and len(element['ingredients_text_fr']) > 5:
-            if element['product_name'] not in food_items_list:
+            if element['product_name'].lower() not in food_items_list:
                 if ('nutriscore_grade' in element) and ('ingredients_text_debug' in element):
                     if ('stores' in element) and ('image_front_url' in element):
                         if (element['ingredients_text_debug']) is not None:
                             food_item = FoodItem()
-                            food_items_list.append(element['product_name'])
+                            food_items_list.append(element['product_name'].lower())
                             
                             food_item.url_id = (element['_id'])
-                            food_item.brand = (element['brands'])
-                            food_item.name = (element['product_name'])
+                            food_item.brand = (element['brands']).lower()
+                            food_item.name = (element['product_name']).lower()
                             food_item.nutriscore = (
                                 element['nutriscore_grade'].upper())
                             food_item.description = (
                                 element['ingredients_text_debug'])
                             food_item.allergens = (element['allergens_from_ingredients'])
-                            food_item.store = (element['stores'])
+                            food_item.store = (element['stores']).lower()
                             food_item.picture = (element['image_front_url'])
                             
                             food_item.category = [category]

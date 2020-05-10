@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.template import loader
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction, IntegrityError
@@ -21,8 +21,8 @@ def index(request):
 
 @transaction.non_atomic_requests
 def result(request):
-    item_name = request.POST['item_name']
-    food_item = get_object_or_404(FoodItem, name=item_name)
+    item_name = (request.POST['item_name']).lower()
+    food_item = (get_list_or_404(FoodItem, name__icontains=item_name))[0]
     category_item = food_item.linked_cat.all()
     substitute_list = list(category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore'))
     substitute_list.remove(food_item)
