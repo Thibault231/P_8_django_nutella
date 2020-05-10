@@ -22,7 +22,7 @@ def index(request):
 @transaction.non_atomic_requests
 def result(request):
     item_name = request.POST['item_name']
-    food_item = FoodItem.objects.get(name=item_name)
+    food_item = get_object_or_404(FoodItem, name=item_name)
     category_item = food_item.linked_cat.all()
     substitute_list = list(category_item[0].fooditem_set.filter(nutriscore__lte=food_item.nutriscore).order_by('nutriscore'))
     substitute_list.remove(food_item)
@@ -35,7 +35,7 @@ def result(request):
 
 
 def item(request, item_id):
-    food_item = FoodItem.objects.get(id=item_id)
+    food_item = get_object_or_404(FoodItem, id=item_id)
     context = {
         'food_item': food_item
     }
@@ -43,7 +43,7 @@ def item(request, item_id):
 
 @login_required
 def save(request, item_id):
-    food_item = FoodItem.objects.get(id=item_id)
+    food_item = get_object_or_404(FoodItem, id=item_id)
     account = Account.objects.get(user=request.user)
     old_history = account.history.all()
     if food_item not in old_history:
@@ -66,4 +66,5 @@ def history(request):
     }
     return render(request, 'purbeurre/history.html', context)
 
-
+def legal(request):
+    return render(request, 'purbeurre/legal.html')

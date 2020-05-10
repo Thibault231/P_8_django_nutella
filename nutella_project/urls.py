@@ -17,10 +17,11 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from purbeurre import views
-
+from connection import views as con_views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^connection/', include(('connection.urls', 'connection'), namespace='connection')),
     url(r'^purbeurre/', include(('purbeurre.urls', 'purbeurre'), namespace='purbeurre')),
     url(r'^admin/', admin.site.urls)
 ]

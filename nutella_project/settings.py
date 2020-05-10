@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['djangonutella.herokuapp.com']
 
 INSTALLED_APPS = [
     'purbeurre.apps.PurbeurreConfig',
+    'connection.apps.ConnectionConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
