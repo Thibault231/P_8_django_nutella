@@ -1,7 +1,9 @@
-from django.test import TestCase
+from django.contrib.auth.models import AnonymousUser, User
+from django.test import RequestFactory, TestCase
 from django.urls import reverse
-from .models import Account, FoodItem, Category, Search
-from .config import TESTS
+from ..models import Account, FoodItem, Category
+from ..config import TESTS
+
 
 class DataBaseTestCase(TestCase):
 
@@ -9,8 +11,10 @@ class DataBaseTestCase(TestCase):
         self.food = FoodItem.objects.create(name=TESTS['name1'], allergens=TESTS['name2'])
         self.category = Category.objects.create(name=TESTS['name2'])
         self.food.linked_cat.add(self.category)
-        self.count = Account.objects.create(first_name=TESTS['name1'],
-        last_name=TESTS['name2'], email=TESTS['name2']+'@gmail.com', password=TESTS['name2']+TESTS['name1'])
+        self.user = User.objects.create_user(
+            username=TESTS['name2'], email=TESTS['name2']+'@gmail.com', password=TESTS['name2'])
+        self.account = Account.objects.create (user=self.user)
+
 
     def test_fooditem_table_args(self):
         food = self.food
@@ -26,27 +30,18 @@ class DataBaseTestCase(TestCase):
         category = self.category
         self.assertEqual(category.name, TESTS['name2'])
     
-    def test_account_table_args(self):
-        count = self.count
-        self.assertEqual(count.first_name, TESTS['name1'])
-        self.assertEqual(count.last_name, TESTS['name2'])
-        self.assertEqual(count.email, TESTS['name2']+'@gmail.com')
-        self.assertEqual(count.password, TESTS['name2']+TESTS['name1'])
-    
+   
     def test_links_food_category_tables(self):
         food = self.food
         category = self.category
         select = FoodItem.objects.get(linked_cat__name__startswith=TESTS['name2'])
         self.assertEqual(select, food)
-
-
-class IndexPageTestCase(TestCase):
-    def test_index_page(self):
-        response = self.client.get(reverse('index'))
-        self.assertEqual(response.status_code, TESTS['RightStatus'])
-
-
-class ResultPageTestCase(TestCase):
-    def test_result_page(self):
-        response = self.client.post(reverse('purbeurre:result'), {'item_name':TESTS['name1']})
-        self.assertEqual(response.status_code, TESTS['RightStatus'])
+    
+    def test_account_table_args(self):
+        user = self.user
+        account = self.account
+        food = self.food
+        account.history.add(food)
+        history_list = list(account.history.all())
+        self.assertEqual(account.user, user)
+        self.assertEqual(history_list[0], food)

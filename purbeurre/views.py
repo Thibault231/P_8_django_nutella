@@ -33,7 +33,7 @@ def result(request):
     }
     return render(request, 'purbeurre/result.html', context)
 
-
+@transaction.non_atomic_requests
 def item(request, item_id):
     food_item = get_object_or_404(FoodItem, id=item_id)
     context = {
