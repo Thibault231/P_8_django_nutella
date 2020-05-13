@@ -3,7 +3,6 @@ from django.template import loader
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction, IntegrityError
 from .models import *
-from .python.api import *
 from .forms import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -16,11 +15,6 @@ from django.contrib.auth.decorators import login_required
 # display index template
 @transaction.non_atomic_requests
 def index(request):
-    return render(request, 'purbeurre/index.html')
-
-@transaction.non_atomic_requests
-def pindex(request):
-    Db_implementation()
     return render(request, 'purbeurre/index.html')
 
 @transaction.non_atomic_requests

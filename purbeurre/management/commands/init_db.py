@@ -1,12 +1,7 @@
-# coding: utf-8
-""" Rules the connection with the OpenfoodFact's API.
-"""
-import pprint
+from django.core.management.base import BaseCommand, CommandError
+from ...config import CATEGORIES_LIST
+from ...models import *
 import requests
-from ..config import CATEGORIES_LIST
-from ..models import *
-
-
 
 def api_extraction_by_category(category, super_cat_list):
     """
@@ -32,7 +27,7 @@ def api_extraction_by_category(category, super_cat_list):
                 if ('nutriscore_grade' in element) and ('ingredients_text_debug' in element):
                     if ('stores' in element) and ('image_front_url' in element):
                         if (element['ingredients_text_debug']) is not None:
-                            food_item = FoodItem()
+                            food_item = FoodItemOFF()
                             food_items_list.append(element['product_name'].lower())
                             
                             food_item.url_id = (element['_id'])
@@ -87,3 +82,8 @@ def Db_implementation(sup_cat_list=CATEGORIES_LIST[0], cat_list=CATEGORIES_LIST[
             print('   Link to categories: ok')
     print('Cat and food linked done:')
 
+
+class Command(BaseCommand):
+
+    def handle(self, *args, **options):
+        Db_implementation()
