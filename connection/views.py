@@ -48,7 +48,7 @@ def count_creation(request):
                         user.first_name = first_name
                         user.last_name = last_name
                         user.save()
-                        account = Account.objects.create (user=user)              
+                        account = Account.objects.create(user=user)    
                         login(request, user)
                         return render(request, 'purbeurre/myaccount.html')
                     else:
@@ -77,6 +77,7 @@ def connexion(request):
         form = ConnexionForm()
     return render(request, 'purbeurre/connexion.html', locals())
 
+@login_required
 def deconnexion(request):
     logout(request)
     return render(request, 'purbeurre/index.html')
