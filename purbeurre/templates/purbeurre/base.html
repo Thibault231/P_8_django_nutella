@@ -55,9 +55,9 @@
                         <i class="far fa-user-circle" title="Creer un compte" ></i></a></button>
                     </li>
                     {% if user.is_anonymous %}
-                    <li class="nav-item"><button id='login'>
-                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %}">
-                        <i class="fas fa-user text-center" title="Me connecter" ></i></a></button>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %} id='login'">
+                        <i class="fas fa-user text-center" title="Me connecter" ></i></a>
                     </li>
                     {% endif %}
                     {% if user.is_authenticated %}

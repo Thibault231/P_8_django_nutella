@@ -11,27 +11,29 @@
 {% endblock %}
 
 {% block S1A2 %}
-<section class="flex-column col-lg-12 text-center bg-roichoco">
+<section class="flex-column col-lg-12 text-center bg-roichoco" id="resultBox">
   <h1><br/>Résultat(s) trouvé(s) pour votre recherche</h1>
   <article class="container col-lg-12">
     <h2><br/>Vous pouvez remplacer l'aliment {{item_name}} par:</h2>
     <br/><br/>
     <div class="row">
         {% for substitute in substitute_list %}
-            <div class="d-flex flex-column col-lg-4 col-md-6 col-sm-12" id="substituteBox">
-              <p> <h1><img src={{substitute.picture}} alt="Photo de "{{ substitute.name }} class="foodPicture" />
-                {{substitute.nutriscore}}</h1>
-              </p>
-              <p><a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a></p>
-              
-              {% if user.is_authenticated %}
-              <button class="btn btn-outline-purbeurre btn-lg btn-block">
-                <a href="/purbeurre/save/{{ substitute.id}}">Sauvegarder</a></button>
-              {% endif %}
-            </div>
+          <div class="d-flex flex-column col-lg-4 col-md-6 col-sm-12" id="substituteBox">
+            <p>
+              <h1><img src={{substitute.picture}} alt="Photo de "{{ substitute.name }} class="foodPicture" />
+              {{substitute.nutriscore}}</h1>
+            </p>
+            <p>
+              <a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a>
+            </p>
+            {% if user.is_authenticated %}
+            <button class="btn btn-outline-purbeurre btn-lg btn-block">
+              <a href="/purbeurre/save/{{ substitute.id}}">Sauvegarder</a>
+            </button>
+            {% endif %}
+          </div>
         {% endfor %}
-    </div>
-  </div>
+   </div>
   </article>
 </section>
 {% endblock %}
