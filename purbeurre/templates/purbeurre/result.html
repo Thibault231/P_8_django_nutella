@@ -24,10 +24,10 @@
               {{substitute.nutriscore}}</h1>
             </p>
             <p>
-              <a href="/purbeurre/item/{{ substitute.id }}">{{ substitute.name }}</a>
+              <a href="/purbeurre/item/{{ substitute.id }}" class="itemResult">{{ substitute.name }}</a>
             </p>
             {% if user.is_authenticated %}
-            <button class="btn btn-outline-purbeurre btn-lg btn-block">
+            <button class="btn btn-outline-purbeurre btn-lg btn-block saveItem">
               <a href="/purbeurre/save/{{ substitute.id}}">Sauvegarder</a>
             </button>
             {% endif %}
