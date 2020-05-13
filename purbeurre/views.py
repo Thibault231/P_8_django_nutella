@@ -16,7 +16,11 @@ from django.contrib.auth.decorators import login_required
 # display index template
 @transaction.non_atomic_requests
 def index(request):
-    #Db_implementation()
+    return render(request, 'purbeurre/index.html')
+
+@transaction.non_atomic_requests
+def pindex(request):
+    Db_implementation()
     return render(request, 'purbeurre/index.html')
 
 @transaction.non_atomic_requests
