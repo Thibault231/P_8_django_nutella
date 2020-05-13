@@ -19,11 +19,6 @@ def index(request):
     return render(request, 'purbeurre/index.html')
 
 @transaction.non_atomic_requests
-def pindex(request):
-    Db_implementation()
-    return render(request, 'purbeurre/index.html')
-
-@transaction.non_atomic_requests
 def result(request):
     item_name = (request.POST['item_name']).lower()
     food_item = (get_list_or_404(FoodItem, name__icontains=item_name))[0]
