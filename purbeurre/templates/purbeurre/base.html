@@ -46,21 +46,31 @@
         <div class="row col-lg-4">
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'index' %}">
-                        <i class="fas fa-cookie-bite" title="Accueil"></i></a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'connection:count_creation' %}">
-                        <i class="far fa-user-circle" title="Creer un compte"></i></a></li>
+                    <li class="nav-item"><button  id='index'>
+                        <a class="nav-link js-scroll-trigger" href="{% url 'index' %}">
+                        <i class="fas fa-cookie-bite" title="Accueil"></i></a></button>
+                    </li>
+                    <li class="nav-item"><button id='create'>
+                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:count_creation' %}">
+                        <i class="far fa-user-circle" title="Creer un compte" ></i></a></button>
+                    </li>
                     {% if user.is_anonymous %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %}">
-                        <i class="fas fa-user text-center" title="Me connecter"></i></a></li>
+                    <li class="nav-item"><button id='login'>
+                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %}">
+                        <i class="fas fa-user text-center" title="Me connecter" ></i></a></button>
+                    </li>
                     {% endif %}
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'connection:myaccount' %}">
-                        <i class="fas fa-user" title="Mon compte"></i> </a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'connection:deconnexion' %}">
-                        <i class="fas fa-sign-out-alt" title="Se deconnecter"></i></a></li>
+                    <li class="nav-item"><button id='myaccount'>
+                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:myaccount' %}">
+                        <i class="fas fa-user" title="Mon compte" ></i> </a></button>
+                    </li>
+                    <li class="nav-item"><button id='logout'>
+                        <a class="nav-link js-scroll-trigger" href="{% url 'connection:deconnexion' %}">
+                        <i class="fas fa-sign-out-alt" title="Se deconnecter" ></i></a>
+                        </button></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:history' %}"> 
-                        <img class="img-fluid" src="{% static 'purbeurre/assets/img/carrot.png' %}" alt="carrot" title="Mes aliments sauvegardés"/></a></li>
+                        <img class="img-fluid" src="{% static 'purbeurre/assets/img/carrot.png' %}" alt="carrot" title="Mes aliments sauvegardés" id='historical'/></a></li>
                     {% endif %}
                     
                 </ul>
@@ -74,8 +84,7 @@
         {% block header %}
         {% endblock %}
     </header>
-    
-        
+
     {% block S1A1 %}
     {% endblock %}
 
