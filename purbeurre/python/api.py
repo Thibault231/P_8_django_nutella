@@ -23,7 +23,6 @@ def api_extraction_by_category(category, super_cat_list):
     response = requests.get(
         ('https://fr.openfoodfacts.org/categorie/{}.json').
         format(category))
-    response = response.encoding('utf-8')
     file = response.json()
     food_list = []
     food_items_list = []
@@ -70,16 +69,16 @@ def food_item_creation(food_item):
     return new_food_item
 
 
-def Db_implementation():
-    for category in CATEGORIES_LIST[1]:
+def Db_implementation(sup_cat_list=CATEGORIES_LIST[0], cat_list=CATEGORIES_LIST[1]):
+    for category in cat_list:
         new_category = Category.objects.create(
             name = category)
-    for category in CATEGORIES_LIST[0]:
+    for category in sup_cat_list:
         new_category = Category.objects.create(
             name = category
         )
         print('Create Cat:',new_category.name, ' ,ok')
-        food_items_list = api_extraction_by_category(category, CATEGORIES_LIST[1])
+        food_items_list = api_extraction_by_category(category, cat_list)
         
         for food_item in food_items_list:
             new_food_item = food_item_creation(food_item)
