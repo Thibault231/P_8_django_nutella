@@ -23,6 +23,7 @@ def api_extraction_by_category(category, super_cat_list):
     response = requests.get(
         ('https://fr.openfoodfacts.org/categorie/{}.json').
         format(category))
+    response = response.encoding('utf-8')
     file = response.json()
     food_list = []
     food_items_list = []
