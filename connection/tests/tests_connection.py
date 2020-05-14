@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AnonymousUser, User
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
-from .models import Account, FoodItem, Category
-from .config import TESTS
+from ..models import Account, FoodItem, Category
+from ..config import TESTS
 
 class ConnectionTestCase(TestCase):
     def setUp(self):

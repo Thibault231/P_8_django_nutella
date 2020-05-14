@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AnonymousUser, User
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
-from ..models import Account, FoodItem, Category
+from ..models import Account, FoodItem, Category, FoodItemOFF
 from ..config import TESTS
 
 
@@ -45,3 +45,20 @@ class DataBaseTestCase(TestCase):
         history_list = list(account.history.all())
         self.assertEqual(account.user, user)
         self.assertEqual(history_list[0], food)
+
+class ApiToDbTestCase(TestCase):
+
+    def setUp(self):
+        self.food_item = FoodItemOFF()
+
+    def test_FoodItemOFF_Class_args(self):
+        food_item = self.food_item
+        self.assertIsInstance(food_item.name, str)
+        self.assertIsInstance(food_item.brand, str)
+        self.assertIsInstance(food_item.category, list)
+        self.assertIsInstance(food_item.store, str)
+        self.assertIsInstance(food_item.description, str)
+        self.assertIsInstance(food_item.allergens, str)
+        self.assertIsInstance(food_item.nutriscore, str)
+        self.assertIsInstance(food_item.url_id, str)
+        self.assertIsInstance(food_item.picture, str)
