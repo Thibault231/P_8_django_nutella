@@ -1,4 +1,7 @@
 # coding: utf-8
+"""Define global variables
+for PurBeurre APP program.
+"""
 
 
 CATEGORIES_LIST = [
@@ -18,9 +21,21 @@ CATEGORIES_LIST = [
     ]
 
 TESTS = {
-    "name1" : "impossible",
-    "name2" : "hellfest",
-    "RightStatus" : 200,
-    "UnfoundStatus": 400,
-    "WrongStatus": 302
+    "name1": "impossible",
+    "name2": "hellfest",
+    "RightStatus": 200,
+    "UnfoundStatus": 404,
+    "WrongStatus": 302,
+    "UrlApp": "https://djangonutella.herokuapp.com/",
+    "UrlResult": "https://djangonutella.herokuapp.com/purbeurre/result/",
+    "UrlHistory": "https://djangonutella.herokuapp.com/purbeurre/history/",
+    "UrlAccount": "https://djangonutella.herokuapp.com/connection/myaccount/",
+    "UrlCreation":
+    "https://djangonutella.herokuapp.com/connection/count_creation/",
+    "UrlConnexion":
+    "https://djangonutella.herokuapp.com/connection/connexion/",
+    "UrlItem": "https://djangonutella.herokuapp.com/purbeurre/item/21/",
+    "UrlSave": "https://djangonutella.herokuapp.com/purbeurre/save/21/",
+    "UrlDeconnexion":
+    "https://djangonutella.herokuapp.com/connection/deconnexion/"
 }

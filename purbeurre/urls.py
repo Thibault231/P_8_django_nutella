@@ -1,3 +1,7 @@
+# coding: utf-8
+""" Module managing urls of
+Purbeurre APP for Django program.
+"""
 from django.conf.urls import url
 from . import views
 

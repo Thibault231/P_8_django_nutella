@@ -1,22 +1,42 @@
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase
-from django.urls import reverse
+# coding: utf-8
+"""[summary]Unitary Test models.py tables
+for purbeurre's APP.
+"""
+from django.contrib.auth.models import User
+from django.test import TestCase
 from ..models import Account, FoodItem, Category, FoodItemOFF
 from ..config import TESTS
 
 
 class DataBaseTestCase(TestCase):
+    """Class TestCase for tests functions.
+
+    Functions:
+    -setUp(self)
+    -test_fooditem_table_args(self)
+    -test_fooditem_table_args(self)
+    -test_category_table_args(self)
+    -test_links_food_category_tables(self)
+    -test_account_table_args(self)
+    """
 
     def setUp(self):
-        self.food = FoodItem.objects.create(name=TESTS['name1'], allergens=TESTS['name2'])
+        """Create self objects for running tests
+        """
+        self.food = FoodItem.objects.create(
+            name=TESTS['name1'], allergens=TESTS['name2'])
         self.category = Category.objects.create(name=TESTS['name2'])
         self.food.linked_cat.add(self.category)
         self.user = User.objects.create_user(
-            username=TESTS['name2'], email=TESTS['name2']+'@gmail.com', password=TESTS['name2'])
-        self.account = Account.objects.create (user=self.user)
-
+            username=TESTS['name2'],
+            email=TESTS['name2']+'@gmail.com',
+            password=TESTS['name2'])
+        self.account = Account.objects.create(user=self.user)
 
     def test_fooditem_table_args(self):
+        """[summary]Tests the types of
+        FoodItem objects attributs.
+        """
         food = self.food
         self.assertEqual(food.name, TESTS['name1'])
         self.assertEqual(food.allergens, TESTS['name2'])
@@ -25,19 +45,27 @@ class DataBaseTestCase(TestCase):
         self.assertIsInstance(food.nutriscore, str)
         self.assertIsInstance(food.store, str)
         self.assertIsInstance(food.url_OpenFF, str)
-    
+
     def test_category_table_args(self):
+        """[summary]Tests the types of
+        Category objects attributs.
+        """
         category = self.category
         self.assertEqual(category.name, TESTS['name2'])
-    
-   
+
     def test_links_food_category_tables(self):
+        """[summary]Tests the link between tables
+        FoodItem and Category.
+        """
         food = self.food
-        category = self.category
-        select = FoodItem.objects.get(linked_cat__name__startswith=TESTS['name2'])
+        select = FoodItem.objects.get(
+            linked_cat__name__startswith=TESTS['name2'])
         self.assertEqual(select, food)
-    
+
     def test_account_table_args(self):
+        """[summary]Tests the types of
+        Account objects attributs.
+        """
         user = self.user
         account = self.account
         food = self.food
@@ -46,12 +74,23 @@ class DataBaseTestCase(TestCase):
         self.assertEqual(account.user, user)
         self.assertEqual(history_list[0], food)
 
-class ApiToDbTestCase(TestCase):
 
+class ApiToDbTestCase(TestCase):
+    """Class TestCase for tests functions.
+
+    Functions:
+    -setUp(self)
+    -testFoodItemOFFClassArgs(self)
+    """
     def setUp(self):
+        """Create self objects for running tests
+        """
         self.food_item = FoodItemOFF()
 
-    def test_FoodItemOFF_Class_args(self):
+    def test_food_itemoff_class_args(self):
+        """[summary]Tests the types of
+        FoodItemOFF objects attributs.
+        """
         food_item = self.food_item
         self.assertIsInstance(food_item.name, str)
         self.assertIsInstance(food_item.brand, str)

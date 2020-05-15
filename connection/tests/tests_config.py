@@ -1,11 +1,12 @@
-from django.test import RequestFactory, TestCase
+# coding: utf-8
+from django.test import TestCase
 from ..config import TESTS
 
 
 class DataBaseTestCase(TestCase):
     def setUp(self):
         self.test_const = TESTS
-        
+
     def tests_TESTS_constant(self):
         test_const = self.test_const
         self.assertIsInstance(test_const, dict)

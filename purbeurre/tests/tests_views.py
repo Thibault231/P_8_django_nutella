@@ -1,38 +1,76 @@
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase
+# coding: utf-8
+"""[summary]Unitary Test views.py functions which don't need
+user's loging.
+"""
+from django.test import TestCase
 from django.urls import reverse
-from ..models import Account, FoodItem, Category
+from ..models import FoodItem, Category
 from ..config import TESTS
 
-class ViewsTestCase(TestCase):
 
+class ViewsTestCase(TestCase):
+    """Class TestCase for tests functions.
+
+    Functions:
+    -setUp(self):
+    -test_index_page(self):
+    -test_legal_page(self):
+    -test_wrong_result_page(self):
+    -test_right_result_page(self):
+    -test_right_item_page(self):
+    -test_wrong_item_page(self):
+
+    """
     def setUp(self):
-        self.food1 = FoodItem.objects.create(name=TESTS['name2'], allergens=TESTS['name1'])
+        """Create self objects for running tests
+        """
+        self.food1 = FoodItem.objects.create(
+            name=TESTS['name2'], allergens=TESTS['name1'])
         self.category1 = Category.objects.create(name=TESTS['name1'])
         self.food1.linked_cat.add(self.category1)
 
     def test_index_page(self):
+        """Test connection to the page Index
+        """
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_legal_page(self):
+        """Test connection to the page Legal
+        """
         response = self.client.get(reverse('purbeurre:legal'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_wrong_result_page(self):
-        response = self.client.post(reverse('purbeurre:result'), {'item_name':TESTS['name1']})
-        self.assertEqual(response.status_code, 404)
+        """Test connection to the page Result with
+        POST method and wrong args.
+        """
+        response = self.client.post(
+            reverse('purbeurre:result'),
+            {'item_name': TESTS['name1']})
+        self.assertEqual(response.status_code, TESTS['UnfoundStatus'])
 
     def test_right_result_page(self):
+        """Test connection to the page Result with
+        POST method and right args.
+        """
         right_name = self.food1.name
-        response = self.client.post(reverse('purbeurre:result'), {'item_name': right_name})
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse('purbeurre:result'),
+            {'item_name': right_name})
+        self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_right_item_page(self):
+        """Test connection to the page Item with
+        GET method and right args.
+        """
         right_id = self.food1.id
         response = self.client.get(reverse('purbeurre:item', args=(right_id,)))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_wrong_item_page(self):
+        """Test connection to the page Item with
+        GET method and wrong args.
+        """
         response = self.client.get(reverse('purbeurre:item', args=(10000,)))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, TESTS['UnfoundStatus'])

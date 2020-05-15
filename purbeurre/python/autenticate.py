@@ -1,7 +1,12 @@
+# coding: utf-8
+"""Modify Django parameters for
+loging with email instead of username.
+"""
 from django.contrib.auth import get_user_model
 
 
-UserModel = get_user_model() # récupère l'objet User même s'il a été modifié ailleurs
+UserModel = get_user_model()
+
 
 class EmailAuth:
     """
@@ -9,16 +14,24 @@ class EmailAuth:
     """
 
     def authenticate(self, request, email=None, password=None, **kwargs):
+        """Define inputs for login
+
+        Keyword Arguments:
+            email {str} -- user's email (default: {None})
+            password {str} -- user's password (default: {None})
+
+        Returns:
+            User -- [user]
+        """
         if email is None:
             email = kwargs.get(UserModel.EMAIL_FIELD)
         try:
             user = UserModel.objects.get(email=email)
         except UserModel.DoesNotExist:
-            # Run the default password hasher once to reduce the timing
-            # difference between an existing and a nonexistent user (#20760).
             UserModel().set_password(password)
         else:
-            if user.check_password(password) and self.user_can_authenticate(user):
+            if user.check_password(password)\
+             and self.user_can_authenticate(user):
                 return user
 
     def user_can_authenticate(self, user):
@@ -30,6 +43,14 @@ class EmailAuth:
         return is_active or is_active is None
 
     def get_user(self, user_id):
+        """Log user.
+
+        Arguments:
+            user_id {int} -- user's id
+
+        Returns:
+            [User] -- user object
+        """
         try:
             user = UserModel._default_manager.get(pk=user_id)
         except UserModel.DoesNotExist:
