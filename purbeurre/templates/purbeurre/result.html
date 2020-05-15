@@ -1,17 +1,14 @@
 {% extends 'purbeurre/base.html' %}
 
 
-{% block S1A1 %}
-<section class="flex-column col-lg-12 text-center bg-moufri">
+{% block S1A1 %}<section class="flex-column col-lg-12 text-center bg-moufri">
   <h1 class="text-uppercase text-white font-weight-bold"><br/>{{item_name.name}}</h1>
   <div class="text-center">
     <p><img src={{item_name.picture}} alt="Photo de "{{ item_name.name }}/></p>
   </div>
-</section>
-{% endblock %}
+</section>{% endblock %}
 
-{% block S1A2 %}
-<section class="flex-column col-lg-12 text-center bg-roichoco" id="resultBox">
+{% block S1A2 %}<section class="flex-column col-lg-12 text-center bg-roichoco" id="resultBox">
   <h1><br/>Résultat(s) trouvé(s) pour votre recherche</h1>
   <article class="container col-lg-12">
     <h2><br/>Vous pouvez remplacer l'aliment {{item_name}} par:</h2>
@@ -35,5 +32,4 @@
         {% endfor %}
    </div>
   </article>
-</section>
-{% endblock %}
+</section>{% endblock %}

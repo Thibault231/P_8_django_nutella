@@ -13,7 +13,7 @@
             <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
+                    <input type="text" name="item_name" maxlength="100" class="item_name">
                     <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
                 </div>
             </form>

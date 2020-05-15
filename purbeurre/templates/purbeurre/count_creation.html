@@ -1,12 +1,11 @@
 {% extends 'purbeurre/base.html' %}
 
-
 {% block S1A1 %}
 <section class="flex-column col-lg-12 text-center" id="creationBox">
     <h1 class="bg-moufri">Créer un compte</h1>
     <article class="container col-lg-12 bg-roichoco">
         <br/><br/>
-    
+
         {% if error_password %}
         <p><strong>Mot de passe erroné.</strong></p>
         {% endif %}
@@ -23,6 +22,5 @@
             <input type="submit" value="Créer mon compte" class="btn btn-outline-purbeurre btn-lg btn-block" />
         </form>
         <br/><br/>
-    </article>
-</section>
+    </article></section>
 {% endblock %}
