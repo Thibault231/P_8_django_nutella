@@ -10011,7 +10011,7 @@ hr.light {
 
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: #DE9440;
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
@@ -10055,7 +10055,7 @@ hr.light {
   }
   #mainNav.navbar-scrolled {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: #fff;
+    background-color: #DE9440;
   }
   #mainNav.navbar-scrolled .navbar-brand {
     color: #212529;

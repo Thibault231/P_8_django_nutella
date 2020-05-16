@@ -26,58 +26,60 @@
 <body>
      {% block nav %}
     <!-- Navigation-->
-    <nav class="container-fluid navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-        <div class=" row col-lg-12 bg-camou">
-            <div class="row col-lg-4  col-sm-12">
-                <img src="{% static 'purbeurre/assets/img/favicon2.png' %}" class="floating-left" alt="logo" />
-                <a class="navbar-brand js-scroll-trigger" href="{% url 'connection:deconnexion' %}">
-                    PurBeurre
-                </a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="row col-sm-12 col-md-6 col-lg-4">
-                <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="row form-group">
-                    <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
-                    <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container-fluid">
+            <div class="row col-lg-12">
+                <div class="row col-lg-4 col-md-6 col-sm-12">
+                    <img src="{% static 'purbeurre/assets/img/favicon2.png' %}" class="floating-left" alt="logo" />
+                    <a class="navbar-brand js-scroll-trigger" href="{% url 'connection:deconnexion' %}">
+                        PurBeurre
+                    </a>
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="row col-sm-12 col-md-6 col-lg-4">
+                    <form class="navbar-form navbar-right inline-form" action="{% url 'purbeurre:result' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                        <input type="text" name="item_name" maxlength="100" class="item_name" id="item_name">
+                        <button type="submit" class="btn btn-primary btn-sm">Chercher un substitut</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="row col-lg-4 col-md-6 col-sm-12">
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="{% url 'index' %}" id='index'>
+                                <i class="fas fa-cookie-bite" title="Accueil"></i></a>
+                            </li>
+                            {% if user.is_anonymous %}
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="{% url 'connection:account_creation' %}" id='create'>
+                                <i class="far fa-user-circle" title="Creer un compte" ></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %}" id='login'>
+                                <i class="fas fa-user text-center" title="Me connecter" ></i></a>
+                            </li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="{% url 'connection:myaccount' %}" id='myaccount'>
+                                <i class="fas fa-user" title="Mon compte" ></i> </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="{% url 'connection:deconnexion' %}" id='logout'>
+                                <i class="fas fa-sign-out-alt" title="Se deconnecter" ></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'purbeurre:history' %}"> 
+                                <img class="img-fluid" src="{% static 'purbeurre/assets/img/carrot.png' %}" alt="carrot" title="Mes aliments sauvegardés" id='historical'/></a>
+                            </li>
+                            {% endif %} 
+                        </ul>
                     </div>
-                </form>
-            </div>
-            <div class="row col-lg-4">
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'index' %}" id='index'>
-                            <i class="fas fa-cookie-bite" title="Accueil"></i></a>
-                        </li>
-                        {% if user.is_anonymous %}
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'connection:account_creation' %}" id='create'>
-                            <i class="far fa-user-circle" title="Creer un compte" ></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'connection:connexion' %}" id='login'>
-                            <i class="fas fa-user text-center" title="Me connecter" ></i></a>
-                        </li>
-                        {% endif %}
-                        {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'connection:myaccount' %}" id='myaccount'>
-                            <i class="fas fa-user" title="Mon compte" ></i> </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'connection:deconnexion' %}" id='logout'>
-                            <i class="fas fa-sign-out-alt" title="Se deconnecter" ></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'purbeurre:history' %}"> 
-                            <img class="img-fluid" src="{% static 'purbeurre/assets/img/carrot.png' %}" alt="carrot" title="Mes aliments sauvegardés" id='historical'/></a>
-                        </li>
-                        {% endif %} 
-                    </ul>
                 </div>
             </div>
         </div>
@@ -139,7 +141,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="{% static 'purbeurre/js/scripts.js' %}" ></script>
 
 </body>
 </html>
