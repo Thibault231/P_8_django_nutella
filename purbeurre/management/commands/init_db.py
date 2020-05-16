@@ -1,7 +1,13 @@
+# coding: utf-8
+"""Create command init_db for local and
+distant implementation of postgres DB
+from datas extracted from Open Food Fact.
+"""
+import requests
 from django.core.management.base import BaseCommand
 from ...config import CATEGORIES_LIST
-from ...models import Category, FoodItem, FoodItemOFF
-import requests
+from ...models import Category, FoodItem
+from .foodItem import FoodItemOFF
 
 
 def api_extraction_by_category(category, super_cat_list):

@@ -7,7 +7,7 @@ from django import forms
 
 class SubstituteForm(forms.Form):
     """Formular Class Form.
-    Use in PurBeurre templates and views.
+    Used in PurBeurre templates and views.
     """
     item_name = forms.CharField(
         label="Nom de l'aliment",

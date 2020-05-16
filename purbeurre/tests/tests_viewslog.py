@@ -24,21 +24,21 @@ class ViewsLoginTestCase(TestCase):
     def setUp(self):
         """Create self objects for running tests
         """
-        self.food2 = FoodItem.objects.create(
+        self.food3 = FoodItem.objects.create(
             name=TESTS['name2'], allergens=TESTS['name1'])
-        self.category2 = Category.objects.create(name=TESTS['name1'])
-        self.food2.linked_cat.add(self.category2)
+        self.category3 = Category.objects.create(name=TESTS['name1'])
+        self.food3.linked_cat.add(self.category3)
         self.factory = RequestFactory()
-        self.user = User.objects.create_user(
+        self.user3 = User.objects.create_user(
             username=TESTS['name1'],
             email=TESTS['name1']+'@gmail.com',
             password=TESTS['name1'])
-        self.account = Account.objects.create(user=self.user)
+        self.account3 = Account.objects.create(user=self.user3)
 
     def test_right_save_log_page(self):
         """Test the loging connection to page Save
         """
-        right_id = self.food2.id
+        right_id = self.food3.id
         self.client.login(
             email=TESTS['name1']+'@gmail.com', password=TESTS['name1'])
         response = self.client.get(reverse('purbeurre:save', args=(right_id,)))
@@ -57,7 +57,7 @@ class ViewsLoginTestCase(TestCase):
     def test_right_save_unlog_page(self):
         """Test the unloging connection to page Save
         """
-        right_id = self.food2.id
+        right_id = self.food3.id
         response = self.client.get(reverse('purbeurre:save', args=(right_id,)))
         self.assertEqual(response.status_code, TESTS['WrongStatus'])
 

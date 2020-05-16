@@ -1,14 +1,36 @@
+# coding: utf-8
+"""[summary]Unitary tests for views.py functions which don't need
+user's loging.
+"""
 from django.contrib.auth.models import User
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 from purbeurre.models import Account, FoodItem, Category
-from ..config import TESTS
+from purbeurre.config import TESTS
 
 
 class ConnectionTestCase(TestCase):
+    """Class TestCase for tests functions.
+
+    Functions:
+    -setUp(self)
+    -test_right_connexion_log_page(self)
+    -test_wrong_connexion_log_page(self)
+    -test_connexion_page(self)
+    -test_deconnexion_log_page(self)
+    -test_deconnexion_unlog_page(self)
+    -test_myaccount_log_page(self)
+    -test_myaccount_unlog_page(self)
+    -test_account_creation_connection_page(self)
+    -test_right_account_creation_page(self):
+
+    """
     def setUp(self):
+        """Create self objects for running tests
+        """
         self.food2 = FoodItem.objects.create(
-         name=TESTS['name2'], allergens=TESTS['name1'])
+            name=TESTS['name2'],
+            allergens=TESTS['name1'])
         self.category2 = Category.objects.create(name=TESTS['name1'])
         self.food2.linked_cat.add(self.category2)
         self.factory = RequestFactory()
@@ -21,47 +43,74 @@ class ConnectionTestCase(TestCase):
         self.account.history.add(self.food2)
 
     def test_right_connexion_log_page(self):
+        """Test login method with right args.
+        """
         response = self.client.login(
-         email=TESTS['name1']+'@gmail.com',
-         password=TESTS['name1'])
+            email=TESTS['name1']+'@gmail.com',
+            password=TESTS['name1'])
         self.assertIs(response, True)
 
     def test_wrong_connexion_log_page(self):
+        """Test login method with wrong args.
+        """
         response = self.client.login(
-         email=TESTS['name1']+'@gmail.com',
-         password=TESTS['name2'])
+            email=TESTS['name1']+'@gmail.com',
+            password=TESTS['name2'])
         self.assertIsNot(response, True)
 
     def test_connexion_page(self):
+        """Test connection to the page Connexion with
+        GET method and right args.
+        """
         response = self.client.get(reverse('connection:connexion'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_deconnexion_log_page(self):
+        """Test deconnection of a loged user with the view deconnexion
+        with GET method and right args.
+        """
         self.client.login(
-         email=TESTS['name1']+'@gmail.com', password=TESTS['name1'])
+            email=TESTS['name1']+'@gmail.com',
+            password=TESTS['name1'])
         response = self.client.get(reverse('connection:deconnexion'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_deconnexion_unlog_page(self):
+        """Test deconnection of an unloged user with the view deconnexion
+        with GET method and right args.
+        """
         response = self.client.get(reverse('connection:deconnexion'))
         self.assertEqual(response.status_code, TESTS['WrongStatus'])
 
     def test_myaccount_log_page(self):
+        """Test connection to the page Myaccount of a connected user
+        with GET method and right args.
+        """
         self.client.login(
-         email=TESTS['name1']+'@gmail.com', password=TESTS['name1'])
+            email=TESTS['name1']+'@gmail.com',
+            password=TESTS['name1'])
         response = self.client.get(reverse('connection:myaccount'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
     def test_myaccount_unlog_page(self):
+        """Test connection to the page Myaccount of an anonymous
+        user with GET method and right args.
+        """
         response = self.client.get(reverse('connection:myaccount'))
         self.assertEqual(response.status_code, TESTS['WrongStatus'])
 
-    def test_count_creation_connection_page(self):
-        response = self.client.get(reverse('connection:count_creation'))
+    def test_account_creation_connection_page(self):
+        """Test account creation on the page Account_creation of an
+        anonymous user with GET method and right args.
+        """
+        response = self.client.get(reverse('connection:account_creation'))
         self.assertEqual(response.status_code, TESTS['RightStatus'])
 
-    def test_right_count_creation_page(self):
-        response = self.client.post(reverse('connection:count_creation'), {
+    def test_right_account_creation_page(self):
+        """Test account creation on the page Account_creation of an
+        anonymous user with GET method and wrong args.
+        """
+        response = self.client.post(reverse('connection:account_creation'), {
             'username': TESTS['name2'],
             'email': TESTS['name2']+'@gmail.com',
             'password1': TESTS['name2'],

@@ -31,7 +31,7 @@ TESTS = {
     "UrlHistory": "https://djangonutella.herokuapp.com/purbeurre/history/",
     "UrlAccount": "https://djangonutella.herokuapp.com/connection/myaccount/",
     "UrlCreation":
-    "https://djangonutella.herokuapp.com/connection/count_creation/",
+    "https://djangonutella.herokuapp.com/connection/account_creation/",
     "UrlConnexion":
     "https://djangonutella.herokuapp.com/connection/connexion/",
     "UrlItem": "https://djangonutella.herokuapp.com/purbeurre/item/21/",

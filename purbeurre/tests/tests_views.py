@@ -1,5 +1,5 @@
 # coding: utf-8
-"""[summary]Unitary Test views.py functions which don't need
+"""[summary]Unitary tests for views.py functions which don't need
 user's loging.
 """
 from django.test import TestCase

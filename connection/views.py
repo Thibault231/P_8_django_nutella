@@ -1,14 +1,29 @@
+# coding: utf-8
+"""Run the views for Purbeurre APP.
+Views:
+-myaccount(request):@login_required
+-count_creation(request)
+-connexion(request)
+-deconnexion(request):@login_required
+"""
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import ConnexionForm, CountCreationForm
 from purbeurre.models import Account
+from .forms import ConnexionForm, CountCreationForm
 
 
 @login_required
 def myaccount(request):
+    """Display the user saved substitutes.
+    @login_required
+    Arguments:
+    -request {GET}
+    Returns:
+    -template -- myaccount.html
+    """
     user = request.user
     account = Account.objects.get(user=user)
     substitute_list = list(account.history.all())
@@ -20,7 +35,14 @@ def myaccount(request):
     return render(request, 'purbeurre/myaccount.html', context)
 
 
-def count_creation(request):
+def account_creation(request):
+    """Manage the account creation.
+    Arguments:
+    -request {POST}
+    Returns:
+    -template -- account_creation.html
+    -template -- myaccount.html when done
+    """
     error_password = False
     error_username = False
     error_email = False
@@ -48,8 +70,9 @@ def count_creation(request):
                         login(request, user)
 
                         return render(request, 'purbeurre/myaccount.html')
-                    else:
-                        error_email = True
+
+                    error_email = True
+
                 else:
                     error_username = True
             else:
@@ -64,10 +87,17 @@ def count_creation(request):
         "form": form
     }
 
-    return render(request, 'purbeurre/count_creation.html', context)
+    return render(request, 'purbeurre/account_creation.html', context)
 
 
 def connexion(request):
+    """Rule the login of an anonymous user
+    on an account.
+    Arguments:
+    -request {POST}
+    Returns:
+    -template -- connexion.html
+    """
     error = False
     user = 0
     if request.method == "POST":
@@ -93,5 +123,12 @@ def connexion(request):
 
 @login_required
 def deconnexion(request):
+    """Rule the deconnexion of an connected user.
+    @login_required
+    Arguments:
+    -request {GET}
+    Returns:
+    -template -- index.html
+    """
     logout(request)
     return render(request, 'purbeurre/index.html')
