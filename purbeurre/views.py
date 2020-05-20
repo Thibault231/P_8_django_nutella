@@ -35,19 +35,25 @@ def result(request):
     Returns:
     -template -- result.html
     """
-    item_name = (request.POST['item_name']).lower()
-    food_item = (get_list_or_404(FoodItem, name__icontains=item_name))[0]
-    category_item = food_item.linked_cat.all()
-    substitute_list = list(category_item[0].fooditem_set.filter(
-        nutriscore__lte=food_item.nutriscore).order_by('nutriscore'))
-    substitute_list.remove(food_item)
-    context = {
-        'substitute_list': substitute_list,
-        'item_name': food_item,
-        'connected': True
-    }
-    return render(request, 'purbeurre/result.html', context)
-
+    try: 
+        item_name = (request.POST['item_name']).lower()
+        if  item_name == "":
+            return render(request, '404.html')
+        food_item = (get_list_or_404(FoodItem, name__icontains=item_name))[0]
+        category_item = food_item.linked_cat.all()
+        substitute_list = list(category_item[0].fooditem_set.filter(
+            nutriscore__lte=food_item.nutriscore).order_by('nutriscore'))
+        substitute_list.remove(food_item)
+        context = {
+            'substitute_list': substitute_list,
+            'item_name': food_item,
+            'connected': True
+        }
+        return render(request, 'purbeurre/result.html', context)
+    except ValueError:
+        return render(request, '404.html')        
+    else:
+        return render(request, '404.html')
 
 @transaction.non_atomic_requests
 def item(request, item_id):
