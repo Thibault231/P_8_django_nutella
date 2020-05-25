@@ -28,10 +28,10 @@ SECRET_KEY = os.getenv("SKEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
+    ALLOWED_HOSTS = ['djangonutella.herokuapp.com']
 else:
     DEBUG = True
-
-ALLOWED_HOSTS = ['djangonutella.herokuapp.com']
+    ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition

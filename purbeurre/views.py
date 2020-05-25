@@ -14,7 +14,6 @@ from django.db import transaction
 from .models import FoodItem, Account
 
 
-@transaction.non_atomic_requests
 def index(request):
     """Front page of web site.
     @transaction.non_atomic_requests
@@ -26,7 +25,6 @@ def index(request):
     return render(request, 'purbeurre/index.html')
 
 
-@transaction.non_atomic_requests
 def result(request):
     """Manage the research of substitute.
     @transaction.non_atomic_requests
@@ -55,7 +53,7 @@ def result(request):
     else:
         return render(request, '404.html')
 
-@transaction.non_atomic_requests
+
 def item(request, item_id):
     """Display details on a selected fooditem.
     @transaction.non_atomic_requests
